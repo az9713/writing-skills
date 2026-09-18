@@ -4,6 +4,8 @@ Fourteen Claude Code skills for writing, shaping, and editing text.
 
 **Explainer page:** https://az9713.github.io/writing-skills/ — what each skill does, when to use which, and where they overlap. Source: [`index.html`](index.html).
 
+**Origin of the book skills:** `book-writing` and `stem-textbook` started from Sean Dollwet's YouTube video [How to Write a Book with AI in 2026 (Full Step-By-Step Tutorial)](https://www.youtube.com/watch?v=KrRDFpSjcR4) (video ID `KrRDFpSjcR4`, channel [@SeanDollwet](https://www.youtube.com/@SeanDollwet)). See [Attributions](#attributions) for all credits.
+
 | Family | Skills |
 |---|---|
 | Nonfiction book | `book-writing`, `author-interview`, `kdp-publishing` |
