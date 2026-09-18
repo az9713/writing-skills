@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Writing Skills Inventory</title>
+<meta name="description" content="An inventory of 14 Claude Code writing skills: what each one does, when to use which, and where they overlap.">
+<style>
+:root{
+  --bg:#0f172a; --card:#1e293b; --text:#e2e8f0; --text2:#cbd5e1; --muted:#94a3b8;
+  --orange:#fb923c; --teal:#2dd4bf; --border:#334155; --border2:#1e293b; --code:#0b1222;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text2);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:32px 16px 80px}
+h1,h2,h3{color:var(--text);line-height:1.25}
+h1{font-size:2rem;margin:0 0 8px}
+h2{font-size:1.45rem;margin:48px 0 12px;padding-top:12px;border-top:1px solid var(--border)}
+h3{font-size:1.1rem;margin:0 0 6px}
+a{color:var(--teal)}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--code);color:var(--orange);padding:1px 5px;border-radius:4px}
+.lede{color:var(--muted);margin:0 0 20px}
+nav.toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 18px}
+nav.toc ol{margin:6px 0;padding-left:22px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--border)}
+th{background:var(--card);color:var(--text);font-weight:600}
+tr:last-child td{border-bottom:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.card p{margin:6px 0}
+.meta{font-size:.85rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:99px;border:1px solid var(--border);margin-right:4px;color:var(--muted)}
+.tag.user{border-color:var(--orange);color:var(--orange)}
+.tag.fam{border-color:var(--teal);color:var(--teal)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 4px}
+.flow span.node{background:var(--card);border:1px solid var(--teal);border-radius:8px;padding:6px 10px;color:var(--text)}
+.flow span.arr{color:var(--orange)}
+.note{border-left:3px solid var(--orange);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0}
+.overlap{margin:0 0 14px}
+.overlap h3{color:var(--orange)}
+footer{margin-top:60px;color:var(--muted);font-size:.85rem}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Writing Skills Inventory</h1>
+<p class="lede">Fourteen Claude Code skills that write, shape, or edit text. This page says what each skill does, which skill to use for which job, and where two skills do similar work. Inventory taken 2026-09-17 from <code>~/.claude/skills/</code>.</p>
+
+<nav class="toc"><strong>Contents</strong>
+<ol>
+<li><a href="#pick">Pick a skill: a one-table guide</a></li>
+<li><a href="#families">The five families</a></li>
+<li><a href="#pipelines">Three pipelines: skills that hand work to each other</a></li>
+<li><a href="#skills">The 14 skills, one card each</a></li>
+<li><a href="#overlap">Overlaps and how to choose</a></li>
+<li><a href="#invoke">How each skill starts</a></li>
+<li><a href="#origins">Origins and licenses</a></li>
+</ol></nav>
+
+<h2 id="pick">1. Pick a skill: a one-table guide</h2>
+<p>Find the row that matches what you want to do. The right column is the skill to type or ask for.</p>
+<div class="tablewrap"><table>
+<tr><th>I want to…</th><th>Use</th></tr>
+<tr><td>Write a nonfiction book (how-to, self-help, business), even with no topic or notes yet</td><td><code>book-writing</code></td></tr>
+<tr><td>Find a book topic, or record what I know, when I have never written anything</td><td><code>author-interview</code> (book-writing calls it for you)</td></tr>
+<tr><td>Publish a finished book on Amazon KDP</td><td><code>kdp-publishing</code></td></tr>
+<tr><td>Write a whole graduate textbook in maths, science, or engineering</td><td><code>stem-textbook</code></td></tr>
+<tr><td>Write one rigorous lesson, tutorial, or textbook chapter (usually HTML with maths)</td><td><code>rigorous-explainer</code></td></tr>
+<tr><td>Check a technical chapter: are the claims proved, the terms defined, the numbers right?</td><td><code>science-editor</code></td></tr>
+<tr><td>Make a draft sound less like AI and more like me, or check whether it reads as AI</td><td><code>no-ai-slop</code></td></tr>
+<tr><td>Make every reply short, active, and literal, like a maintenance manual</td><td><code>asd-ste100</code></td></tr>
+<tr><td>Collect raw ideas for an article, with no structure yet</td><td><code>/writing-fragments</code></td></tr>
+<tr><td>Turn a pile of notes into an article, one paragraph at a time</td><td><code>/writing-shape</code></td></tr>
+<tr><td>Turn a pile of notes into an article by choosing the next step at each point</td><td><code>/writing-beats</code></td></tr>
+<tr><td>Write or edit a skill, <code>CLAUDE.md</code>, or <code>AGENTS.md</code></td><td><code>writing-for-agents</code></td></tr>
+<tr><td>Document a codebase: README, onboarding, API and architecture docs</td><td><code>technical-docs-writer</code></td></tr>
+<tr><td>Record how one build session went, including the failures</td><td><code>dev-journey</code></td></tr>
+</table></div>
+
+<h2 id="families">2. The five families</h2>
+<p>The skills fall into five groups by the kind of text they produce. Skills in one group often call each other. Skills in different groups rarely do.</p>
+<div class="tablewrap"><table>
+<tr><th>Family</th><th>Skills</th><th>Output</th></tr>
+<tr><td>Nonfiction book</td><td>book-writing, author-interview, kdp-publishing</td><td>A general-audience book, from topic to Amazon listing</td></tr>
+<tr><td>STEM teaching</td><td>stem-textbook, rigorous-explainer, science-editor</td><td>Graduate-level chapters and books with proofs, figures, and exercises</td></tr>
+<tr><td>Article craft</td><td>writing-fragments, writing-shape, writing-beats</td><td>One essay or article, built with the author in conversation</td></tr>
+<tr><td>Prose style</td><td>no-ai-slop, asd-ste100</td><td>No new content. They change how existing text or replies read</td></tr>
+<tr><td>Technical documents</td><td>technical-docs-writer, writing-for-agents, dev-journey</td><td>Docs about software, documents that agents read, and build records</td></tr>
+</table></div>
+
+<h2 id="pipelines">3. Three pipelines: skills that hand work to each other</h2>
+
+<h3>Nonfiction book</h3>
+<div class="flow"><span class="node">author-interview</span><span class="arr">→</span><span class="node">book-writing</span><span class="arr">→</span><span class="node">kdp-publishing</span></div>
+<p><code>book-writing</code> runs the whole book. When the author has no topic, no notes, no writing sample, or no story for a section, it calls <code>author-interview</code> (at its §0, Phase B, §5.2, or an <code>[AUTHOR EXPERIENCE NEEDED HERE]</code> marker). When the manuscript passes its Definition of Done (§22), §23 hands off to <code>kdp-publishing</code>.</p>
+
+<h3>STEM textbook</h3>
+<div class="flow"><span class="node">stem-textbook</span><span class="arr">→ each chapter →</span><span class="node">rigorous-explainer</span><span class="arr">→ each draft →</span><span class="node">science-editor</span></div>
+<p><code>stem-textbook</code> plans the whole book and keeps its state. For the craft of each chapter it reads <code>rigorous-explainer</code> (template, check scripts, teaching rules). For review of each drafted chapter it invokes <code>science-editor</code>. Its own table names the split: plan and state here, chapter craft there, rigor review in the editor.</p>
+
+<h3>Article</h3>
+<div class="flow"><span class="node">/writing-fragments</span><span class="arr">→ the pile →</span><span class="node">/writing-shape</span><span class="arr">or</span><span class="node">/writing-beats</span></div>
+<p>The fragments skill is the <em>explore</em> step: it collects raw pieces into one markdown file and imposes no order. The shape and beats skills are two <em>exploit</em> steps: each reads that file as a fixed pile and builds a separate article from it. Pick one of the two, not both, for one article.</p>
+<p class="note">The style skills sit outside all three pipelines. <code>no-ai-slop</code> can edit the output of any pipeline. <code>asd-ste100</code> changes Claude's own replies, not your manuscript.</p>
+
+<h2 id="skills">4. The 14 skills, one card each</h2>
+<p>Line counts are for <code>SKILL.md</code> only. Tags: <span class="tag user">type /name</span> means Claude cannot start the skill by itself; you must type its name.</p>
+
+<div class="grid">
+
+<div class="card" id="book-writing"><h3>book-writing</h3>
+<p class="meta"><span class="tag fam">nonfiction</span> 2,243 lines · no extra files</p>
+<p><strong>Job:</strong> co-author a nonfiction book with a human author. The AI plans and drafts; the author keeps control of the thesis, sources, structure, voice, examples, and final judgment.</p>
+<p><strong>How:</strong> §0 starts from nothing (plain words, a <code>book/</code> folder, an intake interview). Then: market check and positioning (Phase 0), book specification (A), sources (B), author persona (C), concept system (D), architecture (E), chapters (F), detailed outline (G), section-by-section drafting (H), reviews (I, J), 13 editorial passes (K), and optional production and publishing (§23). Author approval gates stop the work between phases.</p>
+<p><strong>Rule it will not break:</strong> it never invents author experience, sources, quotes, or reviews.</p>
+<p><strong>Not for:</strong> fiction, or a graduate STEM textbook.</p></div>
+
+<div class="card" id="author-interview"><h3>author-interview</h3>
+<p class="meta"><span class="tag fam">nonfiction</span> 103 lines</p>
+<p><strong>Job:</strong> interview a would-be author one plain question at a time and save their words, unedited, as book material in <code>book/interviews/YYYY-MM-DD-&lt;mode&gt;.md</code>.</p>
+<p><strong>Four modes:</strong> <em>topic</em> (find 2–3 topics the author can write honestly), <em>knowledge</em> (source notes in the author's words), <em>story</em> (facts for one personal story, then a draft the author approves), <em>voice</em> (a writing sample for an author who has none).</p>
+<p><strong>Limits:</strong> 6–8 questions per session. The AI's summary is kept apart from the author's answers.</p></div>
+
+<div class="card" id="kdp-publishing"><h3>kdp-publishing</h3>
+<p class="meta"><span class="tag fam">nonfiction</span> 84 lines</p>
+<p><strong>Job:</strong> walk a first-time author through Amazon KDP in 8 steps: account and tax, the AI-content question, ISBN, interior format, cover, book details, price, preview and publish.</p>
+<p><strong>Split of work:</strong> the author does every step that needs their account, identity, or money. The AI explains, drafts text, and checks.</p>
+<p><strong>Caveat:</strong> its KDP facts were checked on the KDP Help Center on 2026-09-17 (for example, the 70% eBook royalty band is $2.99–$12.99 from 2026-07-07). KDP rules change; check again before relying on them.</p></div>
+
+<div class="card" id="stem-textbook"><h3>stem-textbook</h3>
+<p class="meta"><span class="tag fam">STEM</span> 153 lines · 6 references · 1 script</p>
+<p><strong>Job:</strong> co-author a graduate textbook in science, maths, or engineering, from book specification to final manuscript.</p>
+<p><strong>How:</strong> 8 phases with author gates A–G: specification; a graph of results plus a book-wide notation table; architecture; detailed outline; drafting by section; chapter review by <code>science-editor</code>; book-level passes; final integrity. State lives in <code>BOOK-STATE.yaml</code> so a new session can resume.</p>
+<p><strong>Reader it assumes:</strong> a graduate fluent in linear algebra, multivariable calculus, and probability, with close to zero exposure to the subfield.</p>
+<p class="meta">Its Origin section points to local files in the author's working folder that are not in this repo.</p></div>
+
+<div class="card" id="rigorous-explainer"><h3>rigorous-explainer</h3>
+<p class="meta"><span class="tag fam">STEM</span> 338 lines · 6 references · 16 scripts · HTML template</p>
+<p><strong>Job:</strong> write one self-contained technical lesson, usually an HTML chapter with MathJax.</p>
+<p><strong>How:</strong> start from a problem that matters, define every term and symbol before use, derive each claim under stated assumptions, interpret it with a worked example, and keep theory apart from empirical or implementation evidence. The Python scripts check links, maths rendering, proofs, prose, figures, and code. It can also publish to GitHub Pages.</p></div>
+
+<div class="card" id="science-editor"><h3>science-editor</h3>
+<p class="meta"><span class="tag fam">STEM</span> 212 lines · 2 references · evals</p>
+<p><strong>Job:</strong> act as a senior Springer textbook editor. It judges whether a graduate reader new to the subfield could learn from the pages.</p>
+<p><strong>The five-part test for every claim:</strong> a precise statement; every term defined; a proof in the smallest case that shows the mechanism; the rescue or limit case; a tie to something concrete (code, a figure, a measured number, a page of a paper).</p>
+<p><strong>Output:</strong> a verdict, blocking defects located as <code>file:line</code> with the full replacement text, line-level rewrites, structural notes, and what already works. It first loads a domain brief for the manuscript.</p></div>
+
+<div class="card" id="no-ai-slop"><h3>no-ai-slop</h3>
+<p class="meta"><span class="tag fam">style</span> 101 lines · eval.md · by Peter Yang, MIT</p>
+<p><strong>Job:</strong> two modes. <em>Edit</em> (default): make the smallest edit that removes AI patterns and keeps the writer's voice, then list what changed. <em>Detect</em>: name each pattern found, quote the line, and give a short fix, with no rewrite and no guess about whether AI wrote it.</p>
+<p><strong>Catches:</strong> a banned-word list (delve, leverage, robust…), binary contrasts ("not X, it's Y"), throat-clearing openers, colon reveals, importance puffery, weasel attribution, fake-profound endings, em-dash clusters, and more.</p></div>
+
+<div class="card" id="asd-ste100"><h3>asd-ste100</h3>
+<p class="meta"><span class="tag fam">style</span> 86 lines</p>
+<p><strong>Job:</strong> make every reply follow ASD-STE100 Simplified Technical English for the rest of the session: at most 20 words in an instruction, 25 in a description; active voice; one word, one meaning; no idioms; numbered procedures; a warning before its step.</p>
+<p><strong>Rule it will not break:</strong> it copies code, paths, <code>file.py:42</code> references, numbers, and error text exactly. It stops only on "stop STE" or "normal mode".</p></div>
+
+<div class="card" id="writing-fragments"><h3>writing-fragments</h3>
+<p class="meta"><span class="tag fam">article</span> <span class="tag user">type /name</span> 79 lines · mattpocock/skills, MIT</p>
+<p><strong>Job:</strong> the <em>explore</em> step. Interview you hard about a subject and append every usable piece (a sharp sentence, a claim, a story, a half-thought, a quote) to one markdown file, separated by <code>---</code>. No outline, no headings.</p>
+<p><strong>Most valued piece:</strong> a <em>leading word</em>, one coined term that names the whole idea.</p></div>
+
+<div class="card" id="writing-shape"><h3>writing-shape</h3>
+<p class="meta"><span class="tag fam">article</span> <span class="tag user">type /name</span> 79 lines · mattpocock/skills, MIT</p>
+<p><strong>Job:</strong> an <em>exploit</em> step. Read the pile, agree what the reader already knows, offer 2–3 openings with different theses, then grow the article paragraph by paragraph. It argues about the form of each block (prose, list, table, callout) and never edits the pile.</p></div>
+
+<div class="card" id="writing-beats"><h3>writing-beats</h3>
+<p class="meta"><span class="tag fam">article</span> <span class="tag user">type /name</span> 67 lines · mattpocock/skills, MIT</p>
+<p><strong>Job:</strong> an <em>exploit</em> step, choose-your-own-adventure style. At each point it offers 2–3 candidate next <em>beats</em> (one move each: a scene, a point, a question, a twist), you pick one, and it writes only that beat.</p>
+<p><strong>Shared rule with writing-shape:</strong> a concept must be <em>grounded</em> (known before the start, or set up by an earlier beat) before a beat can use it.</p></div>
+
+<div class="card" id="writing-for-agents"><h3>writing-for-agents</h3>
+<p class="meta"><span class="tag fam">tech docs</span> 81 lines + SKILL-MECHANICS.md · mattpocock/skills, MIT</p>
+<p><strong>Job:</strong> a reference for writing any document an agent reads: a skill, <code>CLAUDE.md</code>, <code>AGENTS.md</code>.</p>
+<p><strong>Key ideas:</strong> context pointers (a skill description is one), context load versus human cognitive load, what to keep in the file versus push to a linked file, clear completion criteria for each step, leading words, stating the wanted behaviour instead of a prohibition, and pruning stale lines.</p></div>
+
+<div class="card" id="technical-docs-writer"><h3>technical-docs-writer</h3>
+<p class="meta"><span class="tag fam">tech docs</span> 158 lines · 3 references · evals</p>
+<p><strong>Job:</strong> write the full documentation set for a software project in 5 phases: audit, plan the structure, write, validate, keep the docs true. Its conventions are drawn from Google, Stripe, AWS, and Vercel docs.</p>
+<p><strong>Output:</strong> a <code>docs/</code> tree (overview, quickstart, onboarding, concepts, guides, reference, architecture, troubleshooting, and a user guide when non-developers use the product). Every file complete: no stubs, no "TBD".</p></div>
+
+<div class="card" id="dev-journey"><h3>dev-journey</h3>
+<p class="meta"><span class="tag fam">tech docs</span> 180 lines</p>
+<p><strong>Job:</strong> write a full record of one build session, from the first prompt to the finished product: decisions, tools, agents, every error text verbatim, near-misses, costs and limits hit, and unfinished work.</p>
+<p><strong>Timing:</strong> write it at the end of the session, from the live transcript, before the context is summarized. Claude may offer it once at the end of a long build.</p></div>
+
+</div>
+
+<h2 id="overlap">5. Overlaps and how to choose</h2>
+<p>Each pair below does related work. The question under each pair decides which skill to use.</p>
+
+<div class="overlap"><h3>book-writing vs stem-textbook</h3>
+<p>Both plan and draft a whole book with approval gates, and both came from the same source workflow. They differ in what the book is built from. <code>book-writing</code> uses an author persona, stories, word budgets, and market positioning. <code>stem-textbook</code> uses a graph of results, a notation table, proofs, and page or lecture-hour budgets. <code>stem-textbook</code> lists "nonfiction habits in a STEM book" as a common mistake, because persona and anecdote push out derivation steps.<br><strong>Ask:</strong> does the book have to prove or derive its claims? Yes → stem-textbook. No → book-writing.</p></div>
+
+<div class="overlap"><h3>stem-textbook vs rigorous-explainer</h3>
+<p>Both write rigorous chapters, and stem-textbook uses rigorous-explainer's template and scripts. rigorous-explainer does one lesson with no book-wide state. stem-textbook adds the whole-book layer: a shared notation table, results that depend on earlier chapters, <code>BOOK-STATE.yaml</code>, and gates.<br><strong>Ask:</strong> is this one standalone piece, or chapter N of a book? One piece → rigorous-explainer.</p></div>
+
+<div class="overlap"><h3>science-editor vs no-ai-slop</h3>
+<p>Both edit a draft. science-editor checks substance: claims, proofs, definitions, numbers, citations. no-ai-slop changes only how the prose reads and adds no claims. science-editor's own description says to prefer it when claims, proofs, notation, or citations must be checked.<br><strong>Ask:</strong> could a sentence be wrong, or only badly written? Wrong → science-editor. Badly written → no-ai-slop. For a technical chapter, run science-editor first, then no-ai-slop on the fixed text.</p></div>
+
+<div class="overlap"><h3>science-editor vs book-writing's editorial passes</h3>
+<p>book-writing runs its own 13 passes, including Pass 7 (fact-checking and citations). Those passes suit general nonfiction. They do not apply the five-part proof test.<br><strong>Ask:</strong> is there mathematics to check? Yes → science-editor.</p></div>
+
+<div class="overlap"><h3>writing-shape vs writing-beats</h3>
+<p>Both read the same kind of pile, share the grounding rule, and write a separate article file. writing-shape commits to an opening and thesis, then fills the structure paragraph by paragraph. writing-beats keeps the route open and offers a fork at every step.<br><strong>Ask:</strong> do you already know the argument? Yes → writing-shape. You want to find the path as you go → writing-beats.</p></div>
+
+<div class="overlap"><h3>author-interview vs writing-fragments</h3>
+<p>Both get material out of your head by questioning you and save it to a file. author-interview saves your words unedited, question by question, for a book, and never adds a fact. writing-fragments saves pieces from both sides of the conversation, in any shape, for an article.<br><strong>Ask:</strong> book or article? Book → author-interview (book-writing calls it). Article → writing-fragments.</p></div>
+
+<div class="overlap"><h3>asd-ste100 vs no-ai-slop</h3>
+<p>Both change sentences, not content. asd-ste100 is a mode: it controls Claude's replies for the whole session. no-ai-slop is a one-time edit of a draft you give it. Their rules can conflict: STE removes idioms, metaphors, and rhythm; no-ai-slop keeps the writer's humour, digressions, and cadence.<br><strong>Ask:</strong> are you changing Claude's replies or your own text? Replies → asd-ste100. Your text → no-ai-slop.</p></div>
+
+<div class="overlap"><h3>technical-docs-writer vs dev-journey vs writing-for-agents</h3>
+<p>All three write documents about software work, for different readers. technical-docs-writer writes lasting docs for people who use or build the code. dev-journey writes the story of one session. writing-for-agents covers documents an agent reads. The first two meet at one file: technical-docs-writer's <code>history/development-journey.md</code> is the place a dev-journey document belongs, and it links an existing one rather than recreating it.<br><strong>Ask:</strong> who reads it? A developer or user → technical-docs-writer. A future you, auditing one session → dev-journey. An agent → writing-for-agents.</p></div>
+
+<div class="overlap"><h3>writing-for-agents vs skill-creator (outside this inventory)</h3>
+<p>writing-for-agents covers how to word a skill. The separate <code>skill-creator</code> skill (not in this repo) creates, tests, and benchmarks skills.<br><strong>Ask:</strong> are you writing the words, or building and testing the skill? Words → writing-for-agents.</p></div>
+
+<h2 id="invoke">6. How each skill starts</h2>
+<p>Eleven skills are <em>model-invoked</em>: Claude reads their description and can start them when your request matches, and you can also type the name. Three are <em>user-invoked</em>: <code>writing-fragments</code>, <code>writing-shape</code>, and <code>writing-beats</code> set <code>disable-model-invocation: true</code>. Claude cannot start them and no other skill can call them. Type <code>/writing-fragments</code>, <code>/writing-shape</code>, or <code>/writing-beats</code>.</p>
+<p>Three skills are persistent or proactive. <code>asd-ste100</code> stays on until "stop STE" or "normal mode". <code>dev-journey</code> may offer itself once at the end of a long build. <code>book-writing</code> and <code>stem-textbook</code> keep state files so work resumes across sessions.</p>
+
+<h2 id="origins">7. Origins and licenses</h2>
+<div class="tablewrap"><table>
+<tr><th>Skills</th><th>Source</th></tr>
+<tr><td>writing-fragments, writing-shape, writing-beats, writing-for-agents</td><td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a>, MIT license. Fragments, shape, and beats sit in its <code>skills/in-progress/</code> folder.</td></tr>
+<tr><td>no-ai-slop</td><td><a href="https://github.com/petergyang/no-ai-slop">petergyang/no-ai-slop</a>, MIT license (copy in <code>skills/no-ai-slop/LICENSE</code>).</td></tr>
+<tr><td>book-writing</td><td>Adapted from the book workflow Sean shows in YouTube video <code>KrRDFpSjcR4</code> (Co-Author.ai), with a beginner path and the helper skills added.</td></tr>
+<tr><td>stem-textbook</td><td>Built 2026-09-17 from the same book workflow, adapted for STEM, plus rigorous-explainer and science-editor.</td></tr>
+<tr><td>author-interview, kdp-publishing, rigorous-explainer, science-editor, asd-ste100, technical-docs-writer, dev-journey</td><td>author-interview and kdp-publishing were written with book-writing. The other five name no upstream source in their files.</td></tr>
+</table></div>
+
+<h2>Install</h2>
+<p>Copy a skill folder from <code>skills/</code> in this repo into <code>~/.claude/skills/</code>. Keep the folder name. Copy the partner skills too when a skill calls them: <code>book-writing</code> needs <code>author-interview</code> and <code>kdp-publishing</code>; <code>stem-textbook</code> needs <code>rigorous-explainer</code> and <code>science-editor</code>.</p>
+
+<footer>Source: <a href="https://github.com/az9713/writing-skills">github.com/az9713/writing-skills</a> · inventory of 2026-09-17</footer>
+</main>
+</body>
+</html>

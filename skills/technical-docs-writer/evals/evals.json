@@ -1,0 +1,50 @@
+{
+  "skill_name": "technical-docs-writer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write complete documentation for our TypeScript library called `zod-env`. It validates environment variables using Zod schemas. Key features: type-safe env validation at startup, clear error messages showing exactly which env var is missing or wrong, .env file loading via dotenv, works in Node.js and edge runtimes (Cloudflare Workers, Vercel Edge). The main export is `createEnv(schema)` which returns a validated env object. There are no docs at all right now — start from scratch.",
+      "expected_output": "A complete docs/ directory with index.md, getting-started/quickstart.md, reference/api.md (covering createEnv and its options), guides/at least one how-to, and CHANGELOG.md. All files must be complete with no stubs. quickstart.md must include a working code example.",
+      "files": [],
+      "expectations": [
+        "Creates an index.md that includes a code sample showing createEnv usage in the first screenful",
+        "Creates a quickstart.md with numbered steps and a complete working example",
+        "Creates an API reference with full documentation of createEnv parameters and return type",
+        "All docs follow lead-with-the-answer convention (no filler opening phrases)",
+        "No files contain TBD, TODO, or stub placeholders",
+        "Uses tables for config options rather than prose lists",
+        "Heading styles match doc type (verb phrases for guides, noun phrases for concepts)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write complete documentation for a CLI tool called `taskflow`. It manages tasks in a local SQLite database. Commands: `taskflow add 'task title' --priority high|medium|low --due YYYY-MM-DD`, `taskflow list [--status todo|done|all] [--priority high]`, `taskflow done <id>`, `taskflow rm <id>`, `taskflow edit <id> --title 'new title'`. Config lives in `~/.taskflow/config.json` (fields: defaultPriority, dateFormat, editor). Install via npm. This is a personal productivity tool for developers who live in the terminal.",
+      "expected_output": "A complete docs/ directory with index.md, getting-started/ section, full commands reference (every flag, every option), config reference, and troubleshooting. Should follow CLI IA pattern from ia-patterns.md.",
+      "files": [],
+      "expectations": [
+        "Follows the CLI IA pattern: index, getting-started, commands reference, config reference, troubleshooting",
+        "Commands reference documents every flag for every command with types and defaults",
+        "Config reference documents every field in config.json with type, default, and example",
+        "quickstart shows the full workflow: install → add a task → list → mark done",
+        "No files contain TBD, TODO, or stub placeholders",
+        "index.md has the install command in the first screenful",
+        "Troubleshooting covers at least 3 realistic CLI failure scenarios"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write complete documentation for a multi-component system. Component 1: `event-bus` — a Redis-based pub/sub library for Node.js microservices. Publish with `bus.publish('user.created', payload)`, subscribe with `bus.subscribe('user.*', handler)`. Supports wildcards, delivery guarantees (at-least-once), and dead letter queues. Component 2: `event-router` — a standalone service that sits between publishers and subscribers, applies transformation rules and filters defined in `router.config.json`, and routes events to registered downstream services via HTTP webhook calls. The two components are often used together but can be used independently. Engineers constantly ask 'how do bus and router work together?' and 'when should I use router vs. subscribing directly?'. We have zero docs.",
+      "expected_output": "A complete docs/ directory covering both components and their integration. Should include: overview explaining the combined system, separate deep-dive concept docs for each component, an integration guide answering the 'together vs. separate' question, reference docs for the bus API and router config, and an architecture ADR explaining why router is a separate service.",
+      "files": [],
+      "expectations": [
+        "Creates separate concept docs for event-bus and event-router (not merged into one)",
+        "Creates an integration doc that directly answers when to use router vs. direct subscription",
+        "Includes an ADR explaining the architectural decision to make event-router a separate service",
+        "event-bus reference covers publish(), subscribe(), wildcard syntax, and dead letter queues",
+        "event-router reference covers the router.config.json schema completely",
+        "index.md clearly explains the system is two components that can be used independently",
+        "No files contain TBD, TODO, or stub placeholders"
+      ]
+    }
+  ]
+}

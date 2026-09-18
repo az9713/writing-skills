@@ -1,0 +1,23 @@
+{
+  "skill_name": "science-editor",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Do a full editor pass on §3 of module04.html in C:/Users/simon/Downloads/biomechanics_round_2/biomechanics (the biphasic consolidation PDE section). I want to know whether a grad student who has never seen cartilage mechanics could actually follow the derivation, and I want every hole fixed, not just pointed at.",
+      "expected_output": "A report in the five-part delivery order: verdict paragraph; blocking defects each with file:line, quoted text, the missing part named, and full replacement HTML+MathJax; grouped style rewrites; structural notes; what already works. No edits applied to the file.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's a draft chapter from my lecture notes on Sobolev spaces (chapter2.tex in the repo). Review it like a Springer editor would. Does it prove things or just assert them? Check the citations against the PDFs in refs/.",
+      "expected_output": "A ranked editorial report. Every substantive claim checked against the five parts. Citations either quoted from the PDF or marked unverified. Replacement text in LaTeX. States that no domain brief was found and that one was assembled from the repo, listing what could not be verified.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Editor pass on course/06_fno_derivation.html. Check the Burgers numbers in the text against the lab results and make sure the Fourier layer is actually derived, not just drawn.",
+      "expected_output": "Uses the domain brief in EDITOR_PROMPT.md (neural-operator course). Compares each number in the prose to the listed lab values and flags mismatches as factual errors. Flags an underived Fourier layer as a blocking defect with the derivation written in full. Flags ungraded claims.",
+      "files": []
+    }
+  ]
+}
